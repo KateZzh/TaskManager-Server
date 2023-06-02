@@ -3,6 +3,8 @@ const {
   createUserDB,
   getUserByIdDB,
   updateUserDB,
+  deleteUserDB,
+  patchUserDB,
 } = require("../repository/user.repository");
 
 async function getAllUsers() {
@@ -30,4 +32,25 @@ async function updateUser(id, name, surname, email, pwd) {
   return data;
 }
 
-module.exports = { getAllUsers, createUser, getUserById, updateUser };
+async function deleteUser(id) {
+  const data = await deleteUserDB(id);
+  if (!data.length) throw new Error("id not found");
+
+  return data;
+}
+
+async function patchUser(id, clientData) {
+  const data = await patchUserDB(id, clientData);
+  if (!data.length) throw new Error("id not found");
+
+  return data;
+}
+
+module.exports = {
+  getAllUsers,
+  createUser,
+  getUserById,
+  updateUser,
+  deleteUser,
+  patchUser,
+};
