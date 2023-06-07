@@ -1,4 +1,4 @@
-const { getAllTasksDB, createTaskDB, updateTaskDB, getTaskByIdDB } = require('../repository/task.repository');
+const { getAllTasksDB, createTaskDB, updateTaskDB, getTaskByIdDB, deleteTaskDB, patchTaskDB } = require('../repository/task.repository');
 
 async function getAllTasks() {
   const data = await getAllTasksDB();
@@ -27,4 +27,18 @@ async function getTaskById(id) {
   return data;
 }
 
-module.exports = { getAllTasks, createTask, updateTask, getTaskById };
+async function deleteTask(id) {
+  const data = await deleteTaskDB(id);
+  if (!data.length) throw new Error('id not found');
+
+  return data;
+}
+
+async function patchTask(id, taskData) {
+  const data = await patchTaskDB(id, taskData);
+  if (!data.length) throw new Error('id not found');
+
+  return data;
+}
+
+module.exports = { getAllTasks, createTask, updateTask, getTaskById, deleteTask, patchTask };

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllTasks, createTask, updateTask, getTaskById } = require('../service/task.service');
+const { getAllTasks, createTask, updateTask, getTaskById, deleteTask, patchTask } = require('../service/task.service');
 const buildResponse = require('../helper/buildResponse');
 
 const route = express.Router();
@@ -38,6 +38,27 @@ route.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const data = await getTaskById(id);
+    buildResponse(res, 200, data);
+  } catch (error) {
+    buildResponse(res, 404, error.message);
+  }
+});
+
+route.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await deleteTask(id);
+    buildResponse(res, 200, data);
+  } catch (error) {
+    buildResponse(res, 404, error.message);
+  }
+});
+
+route.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const taskData = req.body;
+    const data = await patchTask(id, taskData);
     buildResponse(res, 200, data);
   } catch (error) {
     buildResponse(res, 404, error.message);
