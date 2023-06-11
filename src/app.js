@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const user = require('../src/controller/user.controller');
 const task = require('../src/controller/task.controller');
-const auth = require('../src/controller/auth.controller');
+const api = require('../src/controller/api.controller');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use('/user', user);
 app.use('/task', task);
-app.use('/auth', auth);
+app.use('/api', api);
 
 app.use((error, req, res, _next) => res.send(error.message));
 
